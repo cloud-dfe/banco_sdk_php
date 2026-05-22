@@ -23,4 +23,6 @@ $config = [
 
 $auth = new Auth($config);
 
-$resp = $auth->getAccessToken($config);
+$resp = $auth->getAccessToken();
+
+var_dump($resp);

@@ -20,7 +20,7 @@ class Boleto extends Common
             'payload' => $encriptedPayload
         ];
         $method = 'POST';
-        $route = '/boleto';
+        $route = 'boleto';
         return $this->conn->send($method, $route, $payload);
     }
 

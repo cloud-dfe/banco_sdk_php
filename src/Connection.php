@@ -6,7 +6,7 @@ namespace CloudDFe\BancoSdk;
 
 class Connection
 {
-    protected string $uri;
+    protected string $uri = '';
     protected int $timeout = 60;
     protected array $error = ['code' => null, 'message' => null];
     protected object $config;
@@ -21,15 +21,15 @@ class Connection
     public function requestToken()
     {
         $payload = [
-            'client_id' => $this->config->client_id,
-            'client_secret' => $this->config->client_secret,
-            'username' => $this->config->login,
-            'password' => $this->config->senha,
+            'client_id' => $this->config->auth->client_id,
+            'client_secret' => $this->config->auth->client_secret,
+            'username' => $this->config->auth->login,
+            'password' => $this->config->auth->senha,
             'grant_type' => 'password',
             'scope' => ''
         ];
         $method = 'POST';
-        $route = '/oauth/token';
+        $route = 'oauth/token';
         $header = [
             'Content-Type: application/json',
             'Accept: application/json'
@@ -47,13 +47,13 @@ class Connection
                 'x-api-token: ' . $this->config->x_api_token,
             ];
         }
-        if (!empty($this->config->access_token) && $route === '/oauth/token') {
+        if (!empty($this->config->access_token) && $route === 'oauth/token') {
             $response = $this->requestToken();
             $this->config->access_token = $response->access_token;
         }
         $oCurl = curl_init();
         $options = [
-            CURLOPT_URL => "{$this->uri}{$route}",
+            CURLOPT_URL => "{$this->uri}/{$route}",
             CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
