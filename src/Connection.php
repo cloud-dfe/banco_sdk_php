@@ -20,14 +20,23 @@ class Connection
 
     public function requestToken()
     {
+        if (!empty($this->config->refresh_token)) {
+
+        }
         $payload = [
             'client_id' => $this->config->auth->client_id,
             'client_secret' => $this->config->auth->client_secret,
-            'username' => $this->config->auth->login,
-            'password' => $this->config->auth->senha,
+            'username' => $this->config->auth->login ?? '',
+            'password' => $this->config->auth->senha ?? '',
             'grant_type' => 'password',
             'scope' => ''
         ];
+        //se foi passado no payload o refresh token não é necessário nem o login nem a senha
+        if (!empty($this->config->refresh_token)) {
+            $payload['refresh_token'] = $this->config->refresh_token;
+            unset($payload['username']);
+            unset($payload['password']);
+        }
         $method = 'POST';
         $route = 'oauth/token';
         $header = [

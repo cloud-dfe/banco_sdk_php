@@ -1,4 +1,10 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+require_once '../bootstrap.php';
+
+use CloudDFe\BancoSdk\Auth;
+use CloudDFe\BancoSdk\Boleto;
 
 $config = [
     'timeout' => 60,
@@ -45,3 +51,7 @@ $dados = [
         ]
     ]
 ];
+
+$bol = new Boleto($config);
+
+$boleto = $bol->create($dados);

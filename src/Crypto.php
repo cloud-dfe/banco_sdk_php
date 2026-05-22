@@ -25,7 +25,7 @@ readonly class Crypto
     public static function encrypt(string $plaintext, string $key): string
     {
         if (strlen($key) !== 32) {
-            throw new RuntimeException('Key must be exactly 32 bytes for AES-256.');
+            throw new RuntimeException('A chave [Key] deve ter exatamente 32 bytes para o uso do algoritimo de criptografia AES-256.');
         }
         $ivLength = openssl_cipher_iv_length(self::CIPHER);
         $iv = openssl_random_pseudo_bytes($ivLength);
@@ -39,9 +39,51 @@ readonly class Crypto
             $tag
         );
         if ($ciphertext === false) {
-            throw new RuntimeException('Encryption failed.');
+            throw new RuntimeException('A Encriptação Falhou.');
         }
         // Combine IV, Tag, and Ciphertext and encode to base64
         return base64_encode($iv . $tag . $ciphertext);
+    }
+
+    /**
+     * Decrypts the given base64 encoded ciphertext using the provided key.
+     *
+     * @param string $encodedPayload The base64 encoded payload (IV + Tag + Ciphertext).
+     * @param string $key The decryption key (must be 32 bytes for AES-256).
+     * @return string The decrypted plaintext.
+     * @throws RuntimeException If decryption fails or the payload is invalid.
+     */
+    public function decrypt(string $encryptedMsg, string $key): string
+    {
+        if (strlen($key) !== 32) {
+            throw new RuntimeException('A chave [Key] deve ter exatamente 32 bytes para  o uso do algoritimo de criptografia AES-256.');
+        }
+        $payload = base64_decode($encryptedMsg, true);
+        if ($payload === false) {
+            throw new RuntimeException('Codificação base64 Inválida.');
+        }
+        $ivLength = openssl_cipher_iv_length(self::CIPHER);
+        $tagLength = 16; // Default tag length for GCM in PHP
+
+        if (strlen($payload) < ($ivLength + $tagLength)) {
+            throw new RuntimeException('Comprimento do payload inválido.');
+        }
+        $iv = substr($payload, 0, $ivLength);
+        $tag = substr($payload, $ivLength, $tagLength);
+        $ciphertext = substr($payload, $ivLength + $tagLength);
+
+        $plaintext = openssl_decrypt(
+            $ciphertext,
+            self::CIPHER,
+            $key,
+            OPENSSL_RAW_DATA,
+            $iv,
+            $tag
+        );
+
+        if ($plaintext === false) {
+            throw new RuntimeException('Decriptação Falhou. Chave Inválida ou dados adulterados.');
+        }
+        return $plaintext;
     }
 }
