@@ -8,15 +8,16 @@ use CloudDFe\BancoSdk\Boleto;
 
 $config = [
     'timeout' => 60,
+    'production' => false,
     'auth' => [
-        'client_id' => '2191e682-3d92-484e-b8d5-e7a3c826119a',
-        'client_secret' => '1da65327-0568-4139-a80b-0ff137d5922a',
-        'login' => '',
-        'senha' => '',
+        'client_id' => '019e09d4-b609-7157-ab53-b92cf5f57d26',
+        'client_secret' => 'zkRcRnv68vTrLh67wCDBmrpaoNLVsDa7owquImRm',
+        'login' => "teste@gmail.com",
+        'senha' => '2222',
     ],
-    'secret_key' => '', // chave de escriptacao da softhouse
+    'secret_key' => 'fe7017ae-2299-4836-a3cf-b322a559', // chave de escriptacao da softhouse
     'access_token' => '', // token recuperado do oauth2
-    'x-api-token' => '', // token do emitente
+    'x-api-token' => 'fe7017ae-2299-4836-a3cf-b322a55946e1', // token do emitente
 ];
 
 
@@ -54,4 +55,4 @@ $dados = [
 
 $bol = new Boleto($config);
 
-$boleto = $bol->create($dados);
+$boleto = $bol->gerarBoleto($dados);

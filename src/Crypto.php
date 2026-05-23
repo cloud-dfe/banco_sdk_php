@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CloudDFe\BancoSdk\Crypto;
+namespace CloudDFe\BancoSdk;
 
 use RuntimeException;
 
@@ -25,7 +25,7 @@ readonly class Crypto
     public static function encrypt(string $plaintext, string $key): string
     {
         if (strlen($key) !== 32) {
-            throw new RuntimeException('A chave [Key] deve ter exatamente 32 bytes para o uso do algoritimo de criptografia AES-256.');
+            throw new RuntimeException('O campo secret_key deve ter exatamente 32 caracteres, pegar no cadastro da softhouse.');
         }
         $ivLength = openssl_cipher_iv_length(self::CIPHER);
         $iv = openssl_random_pseudo_bytes($ivLength);

@@ -49,16 +49,16 @@ class Connection
 
     public function send(string $method, string $route, ?array $payload, ?array $header = null)
     {
+        if (empty($this->config->access_token)) {
+            $response = $this->requestToken();
+            $this->config->access_token = $response->access_token;
+        }
         if (empty($header)) {
             $header = [
                 'Content-Type: application/json',
                 'Autorization: Bearer ' . $this->config->access_token,
                 'x-api-token: ' . $this->config->x_api_token,
             ];
-        }
-        if (!empty($this->config->access_token) && $route === 'oauth/token') {
-            $response = $this->requestToken();
-            $this->config->access_token = $response->access_token;
         }
         $oCurl = curl_init();
         $options = [

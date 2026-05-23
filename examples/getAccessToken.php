@@ -7,12 +7,11 @@ use CloudDFe\BancoSdk\Auth;
 
 $config = [
     'timeout' => 60, //opcional
-    'producao' => false,
+    'production' => false,
     'auth' => [
         'client_id' => '019e09d4-b609-7157-ab53-b92cf5f57d26',
         'client_secret' => 'zkRcRnv68vTrLh67wCDBmrpaoNLVsDa7owquImRm',
-        'refresh_token' => 'def50200d2d4a329ff82fe32724d160de2532fe49a8e820ef42b7b9fc3b03eb32c55ec610db1df930463e42ce8710d6d2b72d15ae1580258d5e82563c2c62324d7169502c5c6ad8b0a862c211917f1d2535fd60c8d1a56253a8094eb9dccbe9a29d87eb08f83419dba0f135a55db1afd552c8b2843ab0982884f3e58f4c97df81f1a89cdfdf9ac02c25216de8afe84300220eb2b134494b895edcc3a6eb0917ee70efdc1fdea6809211047ea67ab3386e6ca9db68c3416cf337ed05e8f41d1ec0a71d33ba0c811a65f43cc7d63176cf750fa72ebb1deb5e3937f8ba62b0db5fa9781271495f933f7d76dbe0f8a0bdf8b3bb7c7884e4c075d3e9d40b1cbf0feba362f1dbc24e6ded046dc8ed583c6662e18a2e22b64d5a75b8965baabafcc806ca29e8e3bb4962d6401c043965ab5017600f80f7c8b90246419e6386ef4245e39ee51452a8e3d7902034a208d199f17d4346836cbf902874e0ad3994de377f34d2e6d5ac39a4cc773b8c104ce7d9bcaf4eb72fef9c9f5d7c8a95c27975e214251e30423bb107c',
-        'login' => "cperin20@gmail.com",
+        'login' => "teste@gmail.com",
         'senha' => '2222',
     ],
     'secret_key' => '', // chave de escriptacao da softhouse

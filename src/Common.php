@@ -16,10 +16,10 @@ class Common
     {
         $this->config = json_decode(json_encode($config));
         $this->config->uri = $this->urls[2];
-        if ($this->config->producao) {
+        if ($this->config->production) {
             $this->config->uri = $this->urls[1];
         }
-        $this->config->x_api_token = $config['x_api_token'] ?? '';
+        $this->config->x_api_token = $config["x-api-token"] ?? '';
         $this->conn = new Connection($this->config);
     }
 }
