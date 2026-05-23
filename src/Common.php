@@ -19,7 +19,7 @@ class Common
         if ($this->config->production) {
             $this->config->uri = $this->urls[1];
         }
-        $this->config->x_api_token = $config["x-api-token"] ?? '';
+        $this->config->x_api_key = $config["x-api-key"] ?? '';
         $this->conn = new Connection($this->config);
     }
 }

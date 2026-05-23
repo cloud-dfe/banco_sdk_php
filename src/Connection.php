@@ -43,7 +43,7 @@ class Connection
             'Content-Type: application/json',
             'Accept: application/json'
         ];
-        return $this->send($method, $route, $payload, $header);
+        return $this->request($method, $route, $payload, $header);
     }
 
 
@@ -56,10 +56,15 @@ class Connection
         if (empty($header)) {
             $header = [
                 'Content-Type: application/json',
-                'Autorization: Bearer ' . $this->config->access_token,
-                'x-api-token: ' . $this->config->x_api_token,
+                'Authorization: Bearer ' . $this->config->access_token,
+                'x-api-key: ' . $this->config->x_api_key,
             ];
         }
+        return $this->request($method, $route, $payload, $header);
+    }
+
+    public function request(string $method, string $route, ?array $payload, ?array $header = null)
+    {
         $oCurl = curl_init();
         $options = [
             CURLOPT_URL => "{$this->uri}/{$route}",
@@ -94,5 +99,4 @@ class Connection
         }
         return json_decode($response);
     }
-
 }

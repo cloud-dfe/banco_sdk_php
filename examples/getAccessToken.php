@@ -16,7 +16,7 @@ $config = [
     ],
     'secret_key' => '', // chave de escriptacao da softhouse
     'access_token' => '', // token recuperado do oauth2
-    'x-api-token' => '', // token do emitente
+    'x-api-key' => '', // token do emitente
 ];
 
 $auth = new Auth($config);

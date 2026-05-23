@@ -17,7 +17,7 @@ $config = [
     ],
     'secret_key' => 'fe7017ae-2299-4836-a3cf-b322a559', // chave de escriptacao da softhouse
     'access_token' => '', // token recuperado do oauth2
-    'x-api-token' => 'fe7017ae-2299-4836-a3cf-b322a55946e1', // token do emitente
+    'x-api-key' => 'fe7017ae-2299-4836-a3cf-b322a55946e1', // token do emitente
 ];
 
 
@@ -55,4 +55,6 @@ $dados = [
 
 $bol = new Boleto($config);
 
-$boleto = $bol->gerarBoleto($dados);
+$resp = $bol->gerarBoleto($dados);
+
+var_dump($resp);
