@@ -6,6 +6,10 @@ use RuntimeException;
 
 class Boleto extends Common
 {
+    /**
+     * @param array $dados
+     * @return \stdClass
+     */
     public function gerarBoleto(array $dados)
     {
         if (empty($this->config->x_api_key)) {
@@ -29,23 +33,54 @@ class Boleto extends Common
         return $this->conn->send('POST', 'charge', $payload);
     }
 
-    public function consultaBoleto()
+    /**
+     * @param array $dados
+     * @return \stdClass
+     */
+    public function consultaBoleto(array $dados)
     {
-
+        $identificacao = $dados['identificacao'] ?? '';
+        return $this->conn->send('GET', "charge/{$identificacao}", []);
     }
 
-    public function alteraBoleto()
+    public function alteraBoleto(array $dados)
     {
-
+        if (empty($this->config->x_api_key)) {
+            throw new RuntimeException('O campo x-api-key deve ser informado, pegar no cadastro do emitente.');
+        }
+        $data = json_encode($dados);
+        $encriptedPayload = Crypto::encrypt($data, $this->config->secret_key);
+        $payload = [
+            'payload' => $encriptedPayload
+        ];
+        return $this->conn->send('PUT', 'charge', $payload);
     }
 
-    public function cancelaBoleto()
+    /**
+     * @param array $dados
+     * @return \stdClass
+     */
+    public function cancelaBoleto(array $dados)
     {
-
+        if (empty($this->config->x_api_key)) {
+            throw new RuntimeException('O campo x-api-key deve ser informado, pegar no cadastro do emitente.');
+        }
+        $data = json_encode($dados);
+        $encriptedPayload = Crypto::encrypt($data, $this->config->secret_key);
+        $payload = [
+            'payload' => $encriptedPayload
+        ];
+        return $this->conn->send('DELETE', 'charge', $payload);
     }
 
-    public function consultaEventoBoleto()
+    /**
+     * @param array $dados
+     * @return \stdClass
+     */
+    public function consultaEventoBoleto(array $dados)
     {
-
+        $identificacao = $dados['identificacao'] ?? '';
+        $evento_id = $dados['evento_id'] ?? '';
+        return $this->conn->send('GET', "charge/{$identificacao}/{$evento_id}", []);
     }
 }

@@ -2,20 +2,23 @@
 
 namespace CloudDFe\BancoSdk;
 
-class Emitente
+class Emitente extends Common
 {
-    public function __construct()
+    /**
+     * @param array $dados
+     * @return \stdClass
+     */
+    public function cria(array $dados)
     {
-
+        return $this->conn->send('POST', 'emitente', $dados);
     }
 
-    public function cria()
+    /**
+     * @param array $dados
+     * @return \stdClass
+     */
+    public function atualiza(array $dados)
     {
-
-    }
-
-    public function atualiza()
-    {
-
+        return $this->conn->send('PUT', 'emitente', $dados);
     }
 }
